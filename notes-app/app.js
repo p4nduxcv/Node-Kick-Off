@@ -2,7 +2,7 @@ const validator = require("validator");
 const chalk = require("chalk");
 const yargs = require("yargs");
 
-const getNotes = require("./notes.js");
+const notes = require("./notes.js");
 const { argv } = require("yargs");
 
 //command create
@@ -12,17 +12,17 @@ yargs.command({
   builder: {
     title: {
       describe: "Note Title",
-      demandOption: "true",
+      demandOption: true,
+      type: "string",
     },
     body: {
       describe: "Note Body",
-      demandOption: "true",
-      type: "String",
+      demandOption: true,
+      type: "string",
     },
   },
   handler: function (argv) {
-    console.log(`title`, chalk.bgBlue(argv.title));
-    console.log(`body`, chalk.bgBlue(argv.body));
+    notes.addNotes(argv.title, argv.body);
   },
 });
 
@@ -61,4 +61,6 @@ yargs.command({
 });
 
 // add,remove, read, list
-console.log(yargs.argv);
+// console.log(yargs.argv);
+
+yargs.parse();
