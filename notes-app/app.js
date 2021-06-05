@@ -18,7 +18,7 @@ yargs.command({
     body: {
       describe: "Note Body",
       demandOption: true,
-      type: "string",
+      type: "string  ",
     },
   },
   handler: function (argv) {
@@ -35,10 +35,11 @@ yargs.command({
     title: {
       describe: "Note Title",
       demandOption: "true",
+      type: "String",
     },
   },
   handler: function () {
-    console.log(chalk.bgRed("Removing a new note"), argv);
+    notes.removeNotes(argv.title, argv.body);
   },
 });
 
