@@ -2,11 +2,11 @@ const chalk = require("chalk");
 const fs = require("fs");
 const { CLIENT_RENEG_WINDOW } = require("tls");
 
-const getNotes = function () {
+const getNotes = () => {
   return `Wellcome to grandpa kitchen`;
 };
 
-const addNotes = function (title, body) {
+const addNotes = (title, body) => {
   const existNotes = loadNotes();
   const duplicatedNotes = existNotes.filter((notes) => {
     return notes.title === title;
@@ -27,7 +27,7 @@ const addNotes = function (title, body) {
   console.log(existNotes);
 };
 
-const removeNotes = function (title, body) {
+const removeNotes = (title, body) => {
   const loadExistingNotes = loadNotes();
   console.log(loadExistingNotes);
 
@@ -43,12 +43,20 @@ const removeNotes = function (title, body) {
   }
 };
 
-const saveNotes = function (notes) {
+const listNotes = (title) => {
+  const existingNotes = loadNotes();
+  const notesTitle = existingNotes.map((title) => {
+    console.log(title.title);
+  });
+  // console.log(notesTitle);
+};
+
+const saveNotes = (notes) => {
   dataJSON = JSON.stringify(notes);
   fs.writeFileSync("notes.json", dataJSON);
 };
 
-const loadNotes = function () {
+const loadNotes = () => {
   try {
     const notesBuffer = fs.readFileSync("notes.json");
     const noteJSON = notesBuffer.toString();
@@ -64,4 +72,5 @@ module.exports = {
   getNotes: getNotes,
   addNotes: addNotes,
   removeNotes: removeNotes,
+  listNotes: listNotes,
 };
