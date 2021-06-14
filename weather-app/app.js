@@ -19,7 +19,13 @@ request(url, (error, response) => {
 });
 
 request({ url: urlgeo, json: true }, (error, response) => {
-  const lat = response.body.features[0].center[0];
-  const long = response.body.features[0].center[1];
-  console.log(lat, long);
+  if (error) {
+    console.log(error, `network errror`);
+  } else if (response.body.features.length === 0) {
+    console.log(`unable to find location`);
+  } else {
+    const lat = response.body.features[0].center[0];
+    const long = response.body.features[0].center[1];
+    console.log(lat, long);
+  }
 });
