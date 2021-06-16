@@ -1,5 +1,5 @@
 const geocode = require("./util/geocode");
-
+const forecast = require("./util/forecast");
 // const url =
 //   "http://api.weatherstack.com/current?access_key=050816e4518d6edd2f351d54f1e7345b&query=New%20York&units=f";
 
@@ -33,4 +33,9 @@ const geocode = require("./util/geocode");
 geocode("India", (error, data) => {
   console.log(`Error`, error);
   console.log(`Data`, data);
+});
+
+forecast(-75.7088, 44.1545, (error, data) => {
+  console.log(`Error`, error);
+  console.log("Data", data);
 });
