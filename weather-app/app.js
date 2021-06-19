@@ -30,7 +30,9 @@ const forecast = require("./util/forecast");
 //   }
 // });
 
-geocode("India", (error, data) => {
+console.log(process.argv);
+
+geocode("Boston", (error, data) => {
   if (error) {
     return console.log(error);
   }
