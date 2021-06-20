@@ -10,6 +10,7 @@ const forecast = (lat, long, callback) => {
     "," +
     long +
     "&units=f";
+
   request({ url: url, json: true }, (error, response) => {
     if (error) {
       callback("Network Error", undefined);
@@ -19,9 +20,9 @@ const forecast = (lat, long, callback) => {
       callback(
         undefined,
         `It is curently`,
-        response.current.temperature,
+        response.body.current.temperature,
         `degrees out. It feels like`,
-        response.current.feelslike,
+        response.body.current.feelslike,
         `degree out`
       );
     }

@@ -1,47 +1,23 @@
 const geocode = require("./util/geocode");
 const forecast = require("./util/forecast");
-// const url =
-//   "http://api.weatherstack.com/current?access_key=050816e4518d6edd2f351d54f1e7345b&query=New%20York&units=f";
 
-// const urlgeo =
-//   "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoicGFuZHV4Y3YiLCJhIjoiY2twd3NodzB0MDAwazJ2cHBsMjJ3MzRpbCJ9.jZ5a8aKxZGJ7fPUXGBwudg";
+const address = process.argv[2];
 
-// request(url, (error, response) => {
-//   const _weatherdata = JSON.parse(response.body);
-
-//   console.log(
-//     `It is curently`,
-//     _weatherdata.current.temperature,
-//     `degrees out. It feels like`,
-//     _weatherdata.current.feelslike,
-//     `degree out`
-//   );
-// });
-
-// request({ url: urlgeo, json: true }, (error, response) => {
-//   if (error) {
-//     console.log(error, `network errror`);
-//   } else if (response.body.features.length === 0) {
-//     console.log(`unable to find location`);
-//   } else {
-//     const lat = response.body.features[0].center[0];
-//     const long = response.body.features[0].center[1];
-//     console.log(lat, long);
-//   }
-// });
-
-console.log(process.argv);
-
-geocode("Boston", (error, data) => {
-  if (error) {
-    return console.log(error);
-  }
-
-  forecast(data.lat, data.long, (error, forecastdata) => {
+if (!address) {
+  console.log("please add address");
+} else {
+  geocode(address, (error, { lat, long, location }) => {
+    //data = {lat: , long:, location: } destructuring
     if (error) {
       return console.log(error);
     }
-    console.log(data.location);
-    console.log(forecastdata);
+
+    forecast(lat, long, (error, forecastdata) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log(location);
+      console.log(forecastdata);
+    });
   });
-});
+}
