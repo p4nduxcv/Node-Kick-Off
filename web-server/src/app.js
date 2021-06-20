@@ -6,9 +6,12 @@ const PORT = 3000;
 
 const publicDirPath = path.join(__dirname, "../public");
 app.use(express.static(publicDirPath));
+app.set("view engine", "hbs");
 
 app.get("", (req, res) => {
-  res.send("hello pako");
+  res.render("index", {
+    title: "pakaya",
+  });
 });
 
 // app.get("/help", (req, res) => {
