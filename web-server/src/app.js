@@ -5,8 +5,11 @@ const app = express();
 const PORT = 3000;
 
 const publicDirPath = path.join(__dirname, "../public");
-app.use(express.static(publicDirPath));
+const templateDirpath = path.join(__dirname, "../templates");
+
 app.set("view engine", "hbs");
+app.set("views", templateDirpath);
+app.use(express.static(publicDirPath));
 
 app.get("", (req, res) => {
   res.render("index", {
