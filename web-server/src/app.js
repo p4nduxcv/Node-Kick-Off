@@ -39,14 +39,35 @@ app.get("/help", (req, res) => {
   });
 });
 
+app.get("/products", (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: "You must provide search term",
+    });
+  }
+  res.send({
+    product: [],
+  });
+});
+
 // TO get JSON
 app.get("/weather", (req, res) => {
+  if (!req.query.address) {
+    return res.send({
+      error: " there is no address provided",
+    });
+  }
   res.send([
     {
       forecast: "Esketit",
       Location: "SL",
+      address: req.query.address,
     },
   ]);
+});
+
+app.get("*", (req, res) => {
+  res.send("404");
 });
 
 app.listen(PORT, () => {
