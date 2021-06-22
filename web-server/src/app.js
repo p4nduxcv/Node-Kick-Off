@@ -1,14 +1,21 @@
 const express = require("express");
 const path = require("path");
+const hbs = require("hbs");
 
 const app = express();
 const PORT = 3000;
 
+// Define Path for Express Config
 const publicDirPath = path.join(__dirname, "../public");
-const templateDirpath = path.join(__dirname, "../templates");
+const templateDirpath = path.join(__dirname, "../templates/views");
+const partialPath = path.join(__dirname, "../templates/partials");
 
+//Setup handle bar Engin and view location
 app.set("view engine", "hbs");
 app.set("views", templateDirpath);
+hbs.registerPartials(partialPath);
+
+//set up directory to serve
 app.use(express.static(publicDirPath));
 
 app.get("", (req, res) => {
@@ -17,14 +24,22 @@ app.get("", (req, res) => {
   });
 });
 
-// app.get("/help", (req, res) => {
-//   res.send("help hello pako");
-// });
+app.get("/about", (req, res) => {
+  res.render("about", {
+    title: "About Me",
+    name: "Andrew Mead",
+  });
+});
 
-// app.get("/about", (req, res) => {
-//   res.send("<h1>Hello Pako 2<h2>");
-// });
+app.get("/help", (req, res) => {
+  res.render("help", {
+    helpText: "This is some helpful text.",
+    title: "Help",
+    name: "Pandula",
+  });
+});
 
+// TO get JSON
 app.get("/weather", (req, res) => {
   res.send([
     {
