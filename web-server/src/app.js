@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
-
+const geocode = require("./util/geocode");
+const forecast = require("./util/forecast");
 const app = express();
 const PORT = 3000;
 
@@ -57,13 +58,23 @@ app.get("/weather", (req, res) => {
       error: " there is no address provided",
     });
   }
-  res.send([
-    {
-      forecast: "Esketit",
-      Location: "SL",
-      address: req.query.address,
-    },
-  ]);
+  geocode(req.query.address, (error, { lat, long, location }) => {
+    if (error) {
+      return res.send({ error });
+    }
+
+    forecast(lat, long, (error, forecastData) => {
+      if (error) {
+        return res.send({ error });
+      }
+
+      res.send({
+        forecast: forecastData,
+        location,
+        address: req.query.address,
+      });
+    });
+  });
 });
 
 app.get("*", (req, res) => {
