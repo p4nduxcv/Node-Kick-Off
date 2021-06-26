@@ -4,7 +4,7 @@ const hbs = require("hbs");
 const geocode = require("./util/geocode");
 const forecast = require("./util/forecast");
 const app = express();
-const PORT = 3000;
+const PORT = 8000;
 
 // Define Path for Express Config
 const publicDirPath = path.join(__dirname, "../public");
@@ -21,14 +21,15 @@ app.use(express.static(publicDirPath));
 
 app.get("", (req, res) => {
   res.render("index", {
-    title: "pakaya",
+    title: "Weather",
+    name: "Pandula@2021",
   });
 });
 
 app.get("/about", (req, res) => {
   res.render("about", {
     title: "About Me",
-    name: "Andrew Mead",
+    name: "Pandula@2021",
   });
 });
 
@@ -36,7 +37,7 @@ app.get("/help", (req, res) => {
   res.render("help", {
     helpText: "This is some helpful text.",
     title: "Help",
-    name: "Pandula",
+    name: "Pandula@2021",
   });
 });
 
