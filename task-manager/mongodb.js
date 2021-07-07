@@ -64,23 +64,31 @@ MongoClient.connect(
     //   }
     // );
 
-    DB.collection("tasks").insertMany(
-      [
-        {
-          description: "Inserts an array of documents into MongoDB",
-          completed: true,
-        },
-        {
-          description: "Inserts an array of documents into MongoDB",
-          completed: false,
-        },
-      ],
-      (err, results) => {
-        if (err) {
-          return console.log("BAD");
-        }
-        console.log(results.ops);
+    // DB.collection("tasks").insertMany(
+    //   [
+    //     {
+    //       description: "Inserts an array of documents into MongoDB",
+    //       completed: true,
+    //     },
+    //     {
+    //       description: "Inserts an array of documents into MongoDB",
+    //       completed: false,
+    //     },
+    //   ],
+    //   (err, results) => {
+    //     if (err) {
+    //       return console.log("BAD");
+    //     }
+    //     console.log(results.ops);
+    //   }
+    // );
+
+    DB.collection("users").findOne({ name: "Pandu" }, (err, user) => {
+      if (err) {
+        return console.log("No Data to fetch");
       }
-    );
+
+      console.log(user);
+    });
   }
 );
