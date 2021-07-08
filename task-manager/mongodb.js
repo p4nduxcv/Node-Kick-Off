@@ -90,5 +90,9 @@ MongoClient.connect(
 
       console.log(user);
     });
+
+    DB.collection("users").updateOne({
+      _id: new ObjectID("60e4fd5d2e5dd03b0c5e0fcb"),
+    });
   }
 );
