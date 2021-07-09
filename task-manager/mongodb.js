@@ -1,9 +1,7 @@
 /*
  ** C R U D
  */
-
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+const { MongoClient, ObjectID } = require("mongodb");
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
@@ -19,80 +17,40 @@ MongoClient.connect(
 
     const DB = client.db(databaseName);
 
-    /***
-     * Insert Only One
-     */
-
-    // DB.collection("users").insertOne(
-    //   {
-    //     name: "Pandu",
-    //     age: 27,
-    //   },
-    //   (err, results) => {
-    //     if (err) {
-    //       return console.log("went wrong");
-    //     } else {
-    //       console.log(results.ops);
+    // const updatePromise = DB.collection("users")
+    //   .updateOne(
+    //     {
+    //       _id: new ObjectID("60e4fd5d2e5dd03b0c5e0fcb"),
+    //     },
+    //     {
+    //       $set: {
+    //         name: "pakaya",
+    //       },
     //     }
-    //   }
-    // );
+    //   )
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
 
-    /**
-     * Insert Bulk Operations
-     */
-
-    // DB.collection("users").insertMany(
-    //   [
-    //     {
-    //       name: "Pandu",
-    //       age: 27,
-    //     },
-    //     {
-    //       name: "Dan",
-    //       age: 27,
-    //     },
-    //     {
-    //       name: "Man",
-    //       age: 27,
-    //     },
-    //   ],
-    //   (err, results) => {
-    //     if (err) {
-    //       return console.log("something went wrong");
-    //     }
-    //     console.log(results.ops);
-    //   }
-    // );
-
-    // DB.collection("tasks").insertMany(
-    //   [
-    //     {
-    //       description: "Inserts an array of documents into MongoDB",
-    //       completed: true,
-    //     },
-    //     {
-    //       description: "Inserts an array of documents into MongoDB",
-    //       completed: false,
-    //     },
-    //   ],
-    //   (err, results) => {
-    //     if (err) {
-    //       return console.log("BAD");
-    //     }
-    //     console.log(results.ops);
-    //   }
-    // );
-
-    DB.collection("users").findOne({ name: "Pandu" }, (err, user) => {
-      if (err) {
-        return console.log("No Data to fetch");
-      }
-
-      console.log(user);
-    });
-
-    DB.collection("users").updateOne({
-      _id: new ObjectID("60e4fd5d2e5dd03b0c5e0fcb"),
-    });
+    DB.collection("tasks")
+      .updateMany(
+        {
+          completed: true,
+        },
+        {
+          $set: {
+            completed: false,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result.modifiedCount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 );
