@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const db = "mongodb://127.0.0.1:27017/task-manager-api";
 
+//mongo db connection
 mongoose.connect(
   db,
   {
@@ -17,27 +18,52 @@ mongoose.connect(
   }
 );
 
-// set up models
-const User = mongoose.model("User", {
-  name: {
+// // set up models
+// const User = mongoose.model("User", {
+//   name: {
+//     type: String,
+//   },
+//   age: {
+//     type: Number,
+//   },
+// });
+
+// // create data
+// const me = new User({
+//   name: "Andrew",
+//   age: 27,
+// });
+
+// // save data in mongo
+// me.save()
+//   .then(() => {
+//     console.log(me);
+//   })
+//   .catch((e) => {
+//     console.log(`error`, e);
+//   });
+
+// set up task model
+const Task = mongoose.model("Task", {
+  description: {
     type: String,
   },
-  age: {
-    type: Number,
+  completed: {
+    type: Boolean,
   },
 });
 
 // create data
-const me = new User({
-  name: "Andrew",
-  age: 27,
+const mytask = new Task({
+  description: "pako",
+  completed: true,
 });
 
-// save data in mongo
-me.save()
+mytask
+  .save()
   .then(() => {
-    console.log(me);
+    console.log(mytask);
   })
   .catch((e) => {
-    console.log(`error`, e);
+    console.log(e);
   });
