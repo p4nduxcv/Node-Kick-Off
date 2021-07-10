@@ -35,7 +35,7 @@ MongoClient.connect(
     //     console.log(e);
     //   });
 
-    DB.collection("tasks")
+    /*DB.collection("tasks")
       .updateMany(
         {
           completed: true,
@@ -51,6 +51,17 @@ MongoClient.connect(
       })
       .catch((error) => {
         console.log(error);
+      });*/
+
+    DB.collection("tasks")
+      .deleteOne({
+        description: "Inserts an array of documents into MongodddddDB",
+      })
+      .then((result) => {
+        console.log(result.deletedCount);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   }
 );
