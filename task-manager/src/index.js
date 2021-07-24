@@ -17,18 +17,6 @@ app.post("/users", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
-
-  /**
-   * promises
-   */
-  // user
-  //   .save()
-  //   .then(() => {
-  //     res.send(user);
-  //   })
-  //   .catch((e) => {
-  //     res.status(400).send(e);
-  //   });
 });
 
 app.post("/tasks", async (req, res) => {
@@ -38,14 +26,6 @@ app.post("/tasks", async (req, res) => {
   } catch (error) {
     res.status(400).send(e);
   }
-  // task
-  //   .save()
-  //   .then(() => {
-  //     res.send(task);
-  //   })
-  //   .catch((e) => {
-  //     res.status(400).send(e);
-  //   });
 });
 
 app.get("/users", async (req, res) => {
@@ -80,18 +60,6 @@ app.get("/users/:id", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
-
-  // User.findById(_id)
-  //   .then((user) => {
-  //     if (!user) {
-  //       return res.status(404).send();
-  //     }
-
-  //     res.send(user);
-  //   })
-  //   .catch((e) => {
-  //     res.status(500).send();
-  //   });
 });
 
 app.get("/tasks", async (req, res) => {
@@ -101,13 +69,6 @@ app.get("/tasks", async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
-  // Task.find({})
-  //   .then((tasks) => {
-  //     res.send(tasks);
-  //   })
-  //   .catch((e) => {
-  //     res.status(500).send();
-  //   });
 });
 
 app.get("/tasks/:id", async (req, res) => {
@@ -135,6 +96,23 @@ app.get("/tasks/:id", async (req, res) => {
   //   .catch((e) => {
   //     res.status(500).send();
   //   });
+});
+
+app.patch("/users/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const user = await User.findByIdAndUpdate(_id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!user) {
+      res.status(404).send();
+    }
+
+    res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
 });
 
 app.listen(port, () => {
