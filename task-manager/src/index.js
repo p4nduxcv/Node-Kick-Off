@@ -35,16 +35,6 @@ app.get("/users", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
-  /**
-   * Promise
-   */
-  // User.find({})
-  //   .then((users) => {
-  //     res.send(users);
-  //   })
-  //   .catch((e) => {
-  //     res.status(500).send();
-  //   });
 });
 
 app.get("/users/:id", async (req, res) => {
@@ -112,6 +102,37 @@ app.patch("/users/:id", async (req, res) => {
     res.send(user);
   } catch (error) {
     res.status(500).send();
+  }
+});
+
+app.delete("/users/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const user = await User.findByIdAndDelete(_id);
+    if (!user) {
+      res.send(404).send();
+    }
+
+    res.send(user);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.delete("/tasks/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const task = await Task.findByIdAndDelete(_id);
+
+    if (!task) {
+      res.status(404).send();
+      console.log("No task for ID" + _id);
+    }
+
+    res.status(200).send(task);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send();
   }
 });
 
