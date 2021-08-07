@@ -1,5 +1,5 @@
 // encriptions
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const userRouter = require("./routers/user");
 const taskRouter = require("./routers/task");
@@ -16,6 +16,15 @@ app.listen(port, () => {
   console.log("Server is up on port " + port);
 });
 
+const myFunc = async () => {
+  const token = jwt.sign({ _id: " abcx123" }, "thisismynewcourse", {
+    expiresIn: "1 seconds",
+  });
+  console.log(token);
+  const data = jwt.verify(token, "thisismynewcourse");
+  console.log(data);
+};
+
 const encryptPassword = async () => {
   const password = "password";
   const hashedPassword = await bcrypt.hash(password, 8);
@@ -28,4 +37,4 @@ const encryptPassword = async () => {
   console.log(isMatch);
 };
 
-encryptPassword();
+myFunc();
